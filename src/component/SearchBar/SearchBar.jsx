@@ -1,9 +1,11 @@
 import React from "react";
 import "./SearchBar.scss";
+import close from '../../assets/close.svg'
 
 function SearchBar() {
   const [query, setQuery] = React.useState("");
   const [searchResults, setSearchResults] = React.useState([]);
+  const [suggestions, setSuggestions] = React.useState([]);
   const searchData = [
     {
       title: "Tesla, Inc.",
@@ -56,10 +58,27 @@ function SearchBar() {
   ];
 
 
+
+  const clearQuery = () => {
+    setQuery("");
+    setSearchResults([]);
+  };
+
   const handleQueryChange = (event) => {
     const newQuery = event.target.value;
     setQuery(newQuery);
     performSearch(newQuery);
+
+
+
+
+       const filteredResults = searchData.filter((result) =>
+         result.title.toLowerCase().includes(newQuery.toLowerCase())
+       );
+       setSearchResults(filteredResults);
+
+       const suggestionList = filteredResults.map((result) => result.title);
+       setSuggestions(suggestionList);
   };
 
   const performSearch = (query) => {
@@ -81,7 +100,34 @@ function SearchBar() {
 
           <div className="search_container">
             <div className="input_box">
-              <input type="text" value={query} onChange={handleQueryChange} />
+              <input
+                type="text"
+                value={query}
+                onChange={handleQueryChange}
+                list="suggestions"
+              />
+
+              {query && (
+                <button className="clear_button" onClick={clearQuery}>
+                  <svg
+                    fill="#9aa0a6"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z"
+                      fill="#9aa0a6"
+                    />
+                  </svg>
+                </button>
+              )}
+              <datalist className="suggestions" id="suggestions">
+                {suggestions.map((suggestion, index) => (
+                  <option key={index} value={suggestion} />
+                ))}
+              </datalist>
               <span className="lupa">
                 <svg
                   focusable="false"
@@ -136,10 +182,10 @@ function SearchBar() {
             {searchResults.map((result, index) => (
               <div key={index} className="search-result">
                 <div className="searched_item">
-                <a href={result.link}>{result.title}</a>
-                <p>{result.description}</p>
+                  <a href={result.link}>{result.title}</a>
+                  <p>{result.description}</p>
 
-                <hr />
+                  <hr />
                 </div>
               </div>
             ))}

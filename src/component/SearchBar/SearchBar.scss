@@ -31,6 +31,7 @@
         border: 1px solid #ccc;
         outline: none;
         color: #fff;
+        padding-right: 90px;
 
         &:focus {
           background-color: #303134;
@@ -95,21 +96,32 @@
   flex-direction: column;
   justify-content: center;
   row-gap: 50px;
-
 }
 
-.searched_item{
-    a{
-        display: block;
-        text-decoration: none;
-        margin-bottom: 15px;
+.searched_item {
+  a {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 15px;
+  }
 
-    }
+  p {
+    color: #fff;
+    margin-bottom: 5px;
+  }
+}
 
-    p{
-        color: #fff;
-        margin-bottom: 5px;
-    }
+.clear_button {
+  position: absolute;
+  width: 35px;
+  height: 25px;
+  top: 25%;
+  right: 9%;
+  background-color: transparent;
+  border: none;
+  padding-right: 20px;
+  cursor: pointer;
+  border-right: 1px solid #5f6368;
 }
 
 @media only screen and (min-width: 400px) {

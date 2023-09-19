@@ -102,7 +102,7 @@ function Header() {
                 <li>
                   <a href="https://play.google.com/store/games?pli=1">
                     <div className="img_box">
-                      <img src={calendar} alt="" />
+                     
                     </div>
                     <p>Calendar</p>
                   </a>
